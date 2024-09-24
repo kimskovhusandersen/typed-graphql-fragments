@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createFragment should match the snapshot for a typical User fragment 1`] = `
+"
+  id
+  name
+  posts {
+    title
+  }
+"
+`;
