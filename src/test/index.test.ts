@@ -7,6 +7,13 @@ interface User {
   posts: {
     title: string;
     content: string;
+    comments?: {
+      text: string;
+      author: {
+        name: string;
+        email: string;
+      };
+    }[];
   }[];
 }
 
@@ -59,47 +66,31 @@ describe("createFragment", () => {
 
     expect(fragment).toBe(expectedFragment);
   });
-  interface User {
-    id: number;
-    name: string;
-    posts: {
-      title: string;
-      content: string;
-      comments: {
-        text: string;
-        author: {
-          name: string;
-          email: string;
-        };
-      }[];
-    }[];
-  }
 
-  describe("createFragment", () => {
-    it("should generate a correct GraphQL fragment string for deeply nested structures", () => {
-      const userConfig: FieldSelectionConfig<User> = {
-        id: true,
-        name: true,
-        posts: [
-          {
-            title: true,
-            content: false,
-            comments: [
-              {
-                text: true,
-                author: {
-                  name: true,
-                  email: true,
-                },
+  it("should generate a correct GraphQL fragment string for deeply nested structures", () => {
+    const userConfig: FieldSelectionConfig<User> = {
+      id: true,
+      name: true,
+      posts: [
+        {
+          title: true,
+          content: false,
+          comments: [
+            {
+              text: true,
+              author: {
+                name: true,
+                email: true,
               },
-            ],
-          },
-        ],
-      };
+            },
+          ],
+        },
+      ],
+    };
 
-      const fragment = createFragment<User>(userConfig)();
+    const fragment = createFragment<User>(userConfig)();
 
-      const expectedFragment = `
+    const expectedFragment = `
   id
   name
   posts {
@@ -114,8 +105,7 @@ describe("createFragment", () => {
   }
 `;
 
-      expect(fragment).toBe(expectedFragment);
-    });
+    expect(fragment).toBe(expectedFragment);
   });
 
   it("should generate a correct GraphQL fragment string", () => {
