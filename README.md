@@ -67,8 +67,8 @@ const userConfig: FieldSelectionConfig<User> = {
 
 const fragment = createFragment<User>(userConfig)();
 console.log(fragment);
-This would output:
 
+This would output:
   id
   name
   posts {
@@ -99,34 +99,52 @@ This will output the original `userConfig` object, , useful for cases where you 
 Creating a configuration object can be particularly useful when you want to reuse fragments across different queries or mutate the configuration dynamically. Here’s how this might look:
 
 ```typescript
-const userConfig: FieldSelectionConfig<User> = {
+interface Category {
+  id: number;
+  name: string;
+  description: string;
+}
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+  stock: number;
+  category: Category;
+}
+
+// Reusable fragment for Category
+export const categoryFragment = <T extends boolean | undefined = undefined>(
+  asFieldConfig?: T,
+): T extends true ? FieldSelectionConfig<Category> : string =>
+  createFragment<Category>({
+    id: true,
+    name: true,
+    description: true,
+  })(asFieldConfig);
+
+// Fragment for Product, reusing the Category fragment as a configuration object
+export const productFragment = createFragment<Product>({
   id: true,
   name: true,
-  posts: [
-    {
-      title: true,
-      content: false,
-      comments: [
-        {
-          text: true,
-          author: {
-            name: true,
-            email: true,
-          },
-        },
-      ],
-    },
-  ],
-};
+  price: true,
+  stock: true,
+  category: categoryFragment(true), // Using the Category fragment as a configuration object
+});
 
-// Reuse the base userConfig for a different fragment
-const extendedUserConfig = {
-  ...userConfig,
-  email: true, // Add additional fields
-};
+const productQueryFragment = productFragment();
+console.log(productQueryFragment);
 
-const fragment = createFragment<User>(extendedUserConfig)();
-console.log(fragment);
+// This would output:
+id
+name
+price
+stock
+category {
+  id
+  name
+  description
+}
 
 ```
 
