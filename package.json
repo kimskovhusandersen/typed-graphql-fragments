@@ -1,6 +1,6 @@
 {
   "name": "typed-graphql-fragments",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A package for creating template strings for GraphQL fragments using typed objects",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
