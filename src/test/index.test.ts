@@ -259,4 +259,37 @@ describe("createFragment", () => {
 
     expect(fragment).toBe(expectedFragment);
   });
+  it("should correctly handle conflicting fields during merge", () => {
+    const userConfig1: FieldSelectionConfig<User> = {
+      id: true,
+      name: true,
+    };
+
+    const userConfig2: FieldSelectionConfig<User> = {
+      name: false, // Conflict: 'name' is true in userConfig1 and false in userConfig2
+      posts: [
+        {
+          title: true,
+          content: true,
+        },
+      ],
+    };
+
+    const mergedConfig = {
+      ...userConfig1,
+      ...userConfig2,
+    };
+
+    const fragment = createFragment<User>(mergedConfig)();
+
+    const expectedFragment = `
+  id
+  posts {
+    title
+    content
+  }
+`;
+
+    expect(fragment).toBe(expectedFragment);
+  });
 });
