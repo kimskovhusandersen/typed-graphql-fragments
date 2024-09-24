@@ -176,13 +176,3 @@ License
 This project is licensed under the MIT License. See the LICENSE file for more details.
 
 ```markdown
-### Explanation:
-
-- **Title and Introduction:** Gives a clear overview of what the package does and its main benefits.
-- **Features:** Highlights the key features of the package.
-- **Installation:** Provides installation instructions for both npm and Yarn.
-- **Usage:** Includes a usage example that demonstrates how to use the main features of the package.
-- **API Reference:** Briefly describes the main functions and types provided by the package.
-- **Contributing:** Outlines the steps for contributing to the project.
-- **License:** Specifies the license under which the project is distributed.
-```
