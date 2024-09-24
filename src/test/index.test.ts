@@ -1,4 +1,5 @@
-import { createFragment, FieldSelectionConfig } from "../src";
+import { createFragment } from "../fragmentUtils";
+import { FieldSelectionConfig } from "../types";
 
 interface User {
   id: number;
@@ -12,11 +13,13 @@ interface User {
 const userConfig: FieldSelectionConfig<User> = {
   id: true,
   name: true,
-  posts: {
-    title: true,
-    content: false, // we don't want content
-  },
+  posts: [
+    {
+      title: true,
+      content: false,
+    },
+  ],
 };
 
-const fragment = createFragment(userConfig)();
+const fragment = createFragment<User>(userConfig)();
 console.log(fragment);
