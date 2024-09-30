@@ -68,7 +68,7 @@ const userConfig: FieldSelectionConfig<User> = {
 const fragment = createFragment<User>(userConfig)();
 console.log(fragment);
 
-This would output:
+// This would output:
   id
   name
   posts {
