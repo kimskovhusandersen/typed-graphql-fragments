@@ -69,18 +69,18 @@ const fragment = createFragment<User>(userConfig)();
 console.log(fragment);
 
 // This would output:
-  id
-  name
-  posts {
-    title
-    comments {
-      text
-      author {
-        name
-        email
-      }
+id
+name
+posts {
+  title
+  comments {
+    text
+    author {
+      name
+      email
     }
   }
+}
 ```
 
 ## Generating a Configuration Object
